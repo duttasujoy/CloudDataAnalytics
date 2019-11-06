@@ -1,0 +1,46 @@
+version: '3'
+services:
+  eureca:
+    build:
+      context: ./
+      dockerfile: eureca/Dockerfile_Eureca
+    image: eureca
+    ports:
+      - 8761:8761
+    networks:
+      - network1
+  
+  product:
+    build:
+      context: ./
+      dockerfile: product/Dockerfile_product
+    image: product
+    ports:
+      - 8080
+    networks:
+      - network1
+  
+  loadbalancer:
+    build:
+      context: ./
+      dockerfile: loadbalancer/Dockerfile_loadbalancer
+    image: loadbalancer
+    ports:
+      - 9999:9999
+    networks:
+      - network1
+      
+  dts:
+    build:
+      context: ./
+      dockerfile: dts/Dockerfile_dts
+    image: dts
+    ports:
+      - 8090
+    networks:
+      - network1
+     
+
+networks:
+  network1:
+   driver: bridge
