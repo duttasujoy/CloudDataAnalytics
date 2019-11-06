@@ -1,0 +1,66 @@
+<div class="container" >
+    <div class="row grid-container form-group">
+        <form >
+            <div class="row">
+                <div class="col-sm-3 form-group">
+                    <input type="text" class="form-control" placeholder="Meter Udc Id" (input)="updateUdcId($event)">
+                    <input type="text"
+                            name="readingDate"
+                            placeholder="Reading Date"
+                            class="form-control"
+                            [bsConfig]="{ isAnimated: true }"
+                            [(ngModel)]="readingDate"
+                            containerClass="dark-blue"
+                            bsDatepicker>
+                </div>
+            </div>
+            <div class="input-group-btn">
+                <button class="btn btn-success" (click)="searchByUdcId()">Search</button>
+            </div>
+        </form>
+        
+    </div>
+   
+    
+    <br>
+</div>
+
+<div class="container">
+    <div class="row grid-container">
+        <div class="col-md-10">
+            <div class="table">
+                <table class="table table-striped table-hover table-dark" >
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th cmSortBy="meterUdcId" (sorted)="sort($event)">Meter Udc Id</th>
+                            <th cmSortBy="channelId" (sorted)="sort($event)">Channel Id</th>
+                            <th cmSortBy="meterReadingDate" (sorted)="sort($event)">Meter Reading Date</th>
+                            <th cmSortBy="totalConsumtion" (sorted)="sort($event)">Total Consumption</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ngx-spinner 
+                            bdColor="rgba(51,51,51,0.8)"
+                            size="medium"
+                            color="#fff"
+                            type="ball-scale-multiple"
+                        >
+                        <p style="font-size: 20px; color: white">Loading...</p>
+                        </ngx-spinner>
+                        <tr *ngFor="let data of meterDatas|paginate: { itemsPerPage: 10, currentPage: p }">
+                            <td>&nbsp;</td>
+                            <td><a [routerLink]="['/dashboard',data.meterUdcId,data.meterReadDate]">{{ data.meterUdcId }}</a></td>
+                            <td>{{ data.channelId }}</td>
+                            <td>{{ data.meterReadDate }}</td>
+                            <td>{{ data.intervalReadData}}</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
